@@ -9,7 +9,7 @@ print(f"OPENROUTER_API_KEY exists: {bool(OPENROUTER_API_KEY)}")
 
 API_URL = f"https://api.telegram.org/bot{BOT_TOKEN}"
 OPENROUTER_URL = "https://openrouter.ai/api/v1/chat/completions"
-MODEL = "meta-llama/llama-3.1-8b-instruct:free"
+MODEL = "google/gemma-3-4b-it:free"
 
 SYSTEM_PROMPT = "You are a helpful and friendly assistant. Reply in the same language the user uses."
 
