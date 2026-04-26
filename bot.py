@@ -4,9 +4,6 @@ import requests
 BOT_TOKEN = os.environ.get("BOT_TOKEN", "").strip()
 OPENROUTER_API_KEY = os.environ.get("OPENROUTER_API_KEY", "").strip()
 
-print(f"BOT_TOKEN: '{BOT_TOKEN}'")
-print(f"OPENROUTER_API_KEY exists: {bool(OPENROUTER_API_KEY)}")
-
 API_URL = f"https://api.telegram.org/bot{BOT_TOKEN}"
 OPENROUTER_URL = "https://openrouter.ai/api/v1/chat/completions"
 MODEL = "deepseek/deepseek-r1:free"
@@ -34,19 +31,29 @@ def ask_ai(user_message):
         "model": MODEL,
         "messages": [{"role": "system", "content": SYSTEM_PROMPT}] + conversation_history
     }
-    response = requests.post(OPENROUTER_URL, headers=headers, json=body)
-    data = response.json()
-    print(f"OpenRouter response: {data}")
-    reply = data["choices"][0]["message"]["content"]
-    conversation_history.append({"role": "assistant", "content": reply})
-    return reply
+    try:
+        response = requests.post(OPENROUTER_URL, headers=headers, json=body)
+        data = response.json()
+        print(f"OpenRouter response: {data}")
+        reply = data["choices"][0]["message"]["content"]
+        conversation_history.append({"role": "assistant", "content": reply})
+        return reply
+    except Exception as e:
+        print(f"Error: {e}")
+        return "Maaf, aku lagi error. Coba lagi ya!"
 
 def main():
     print("Bot started...")
-    offset = None
+    
+    # Skip semua pesan lama
+    updates = get_updates()
+    if "result" in updates and updates["result"]:
+        offset = updates["result"][-1]["update_id"] + 1
+    else:
+        offset = None
+
     while True:
         updates = get_updates(offset)
-        print(f"Updates: {updates}")
         if "result" in updates:
             for update in updates["result"]:
                 offset = update["update_id"] + 1
