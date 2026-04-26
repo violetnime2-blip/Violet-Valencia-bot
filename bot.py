@@ -1,10 +1,10 @@
 import os
 import requests
 
-BOT_TOKEN = os.environ.get("BOT_TOKEN")
-OPENROUTER_API_KEY = os.environ.get("OPENROUTER_API_KEY")
+BOT_TOKEN = os.environ.get("BOT_TOKEN", "").strip()
+OPENROUTER_API_KEY = os.environ.get("OPENROUTER_API_KEY", "").strip()
 
-print(f"BOT_TOKEN exists: {bool(BOT_TOKEN)}")
+print(f"BOT_TOKEN: '{BOT_TOKEN}'")
 print(f"OPENROUTER_API_KEY exists: {bool(OPENROUTER_API_KEY)}")
 
 API_URL = f"https://api.telegram.org/bot{BOT_TOKEN}"
