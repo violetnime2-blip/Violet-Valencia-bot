@@ -6,7 +6,7 @@ OPENROUTER_API_KEY = os.environ.get("OPENROUTER_API_KEY", "").strip()
 
 API_URL = f"https://api.telegram.org/bot{BOT_TOKEN}"
 OPENROUTER_URL = "https://openrouter.ai/api/v1/chat/completions"
-MODEL = "google/gemma-4-27b-it:free"
+MODEL = "google/gemma-4-26b-a4b-it:free"
 
 SYSTEM_PROMPT = "You are a helpful and friendly assistant. Reply in the same language the user uses."
 
